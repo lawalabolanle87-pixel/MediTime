@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediTime — Your Pharmacy Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Name entry modal (shown once, on first visit) -->
+    <div class="modal-overlay" id="nameModal">
+      <div class="modal-card">
+        <span class="brand-mark modal-mark">＋</span>
+        <h2>Welcome to MediTime</h2>
+        <p class="view-hint">What should we call you?</p>
+        <form id="nameForm">
+          <input type="text" id="nameInput" placeholder="Your name" required autocomplete="off">
+          <button type="submit" class="btn-primary">Continue</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+      <button class="brand" id="homeBtn" aria-label="Go home">
+        <span class="brand-mark">＋</span>
+        <span class="brand-name">MediTime</span>
+      </button>
+      <button class="back-btn" id="backBtn" hidden>← Home</button>
+    </header>
+
+    <!-- ============ HOME ============ -->
+    <main class="view" data-view="home">
+
+      <section class="progress-card">
+        <div class="progress-ring" id="progressRing">
+          <svg viewBox="0 0 100 100">
+            <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+            <circle class="ring-fg" id="ringFg" cx="50" cy="50" r="42"></circle>
+          </svg>
+          <div class="progress-center">
+            <span id="progressPct">0%</span>
+            <small>today</small>
+          </div>
+        </div>
+        <div class="progress-text">
+          <h1>Good day, <span id="greetName">there</span></h1>
+          <p id="progressSummary">No doses added yet.</p>
+        </div>
+      </section>
+
+      <section class="nav-grid">
+        <button class="nav-card" data-goto="doses">
+          <span class="nav-icon">💊</span>
+          <span class="nav-label">Doses</span>
+          <span class="nav-sub">Track & get reminded</span>
+        </button>
+        <button class="nav-card" data-goto="interactions">
+          <span class="nav-icon">⚠️</span>
+          <span class="nav-label">Interactions</span>
+          <span class="nav-sub">Check medication mixes</span>
+        </button>
+        <button class="nav-card" data-goto="pharmacy">
+          <span class="nav-icon">🏥</span>
+          <span class="nav-label">Pharmacy</span>
+          <span class="nav-sub">Find & request refills</span>
+        </button>
+        <button class="nav-card" data-goto="guide">
+          <span class="nav-icon">📖</span>
+          <span class="nav-label">Med guide</span>
+          <span class="nav-sub">Look up common meds</span>
+        </button>
+        <button class="nav-card nav-card-wide" data-goto="symptoms">
+          <span class="nav-icon">🩺</span>
+          <span class="nav-label">Symptom guide</span>
+          <span class="nav-sub">Figure out your next step</span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- ============ DOSES ============ -->
+    <main class="view" data-view="doses" hidden>
+      <h2 class="view-title">Today's doses</h2>
+
+      <ul class="dose-list" id="doseList"></ul>
+      <div class="empty-state" id="emptyState">
+        <p>Nothing scheduled yet.</p>
+        <p class="empty-sub">Add a medication below.</p>
+      </div>
+
+      <h2 class="view-title">Add a medication</h2>
+      <form class="card-form" id="addForm">
+        <div class="field">
+          <label for="medName">Medication name</label>
+          <input type="text" id="medName" placeholder="e.g. Metformin" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="medDose">Dosage</label>
+            <input type="text" id="medDose" placeholder="e.g. 500mg">
+          </div>
+          <div class="field">
+            <label for="medTime">Time</label>
+            <input type="time" id="medTime" required>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">Add medication</button>
+      </form>
+    </main>
+
+    <!-- ============ INTERACTIONS ============ -->
+    <main class="view" data-view="interactions" hidden>
+      <h2 class="view-title">Check for interactions</h2>
+      <p class="view-hint">Select two or more medications to see sample interaction notes. This uses a small illustrative dataset — always confirm with a pharmacist.</p>
+
+      <div class="chip-grid" id="interactionChips"></div>
+
+      <div class="result-card" id="interactionResult">
+        <p class="result-empty">Select at least two medications above.</p>
+      </div>
+    </main>
+
+    <!-- ============ PHARMACY ============ -->
+    <main class="view" data-view="pharmacy" hidden>
+      <h2 class="view-title">Nearby pharmacies</h2>
+      <ul class="pharmacy-list" id="pharmacyList"></ul>
+
+      <h2 class="view-title">Request a refill</h2>
+      <form class="card-form" id="refillForm">
+        <div class="field">
+          <label for="refillMed">Medication</label>
+          <input type="text" id="refillMed" placeholder="e.g. Amlodipine" required>
+        </div>
+        <div class="field">
+          <label for="refillPharmacy">Pharmacy</label>
+          <select id="refillPharmacy" required></select>
+        </div>
+        <button type="submit" class="btn-primary">Request refill</button>
+      </form>
+
+      <h2 class="view-title">Your requests</h2>
+      <ul class="refill-list" id="refillList"></ul>
+      <div class="empty-state" id="refillEmpty">
+        <p>No refill requests yet.</p>
+      </div>
+    </main>
+
+    <!-- ============ GUIDE ============ -->
+    <main class="view" data-view="guide" hidden>
+      <h2 class="view-title">Medication guide</h2>
+      <input type="search" id="guideSearch" class="search-input" placeholder="Search a medication…">
+      <ul class="guide-list" id="guideList"></ul>
+    </main>
+
+    <!-- ============ SYMPTOMS ============ -->
+    <main class="view" data-view="symptoms" hidden>
+      <h2 class="view-title">What's going on?</h2>
+      <p class="view-hint">Pick what best matches how you're feeling.</p>
+      <div class="chip-grid" id="symptomChips"></div>
+
+      <div class="result-card" id="symptomResult">
+        <p class="result-empty">Choose a symptom above to see guidance.</p>
+      </div>
+    </main>
+
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

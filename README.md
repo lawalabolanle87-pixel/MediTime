@@ -49,7 +49,7 @@ health-app/
 
 This project is deployed and publicly accessible at:
 
-`[add your live link here after deploying on Netlify/Vercel]`
+`[https://pharm-meditime.netlify.app]`
 
 ## Author
 

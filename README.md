@@ -50,7 +50,7 @@ health-app/
 This project is deployed and publicly accessible at:
 
 `[https://pharm-meditime.netlify.app]`
-
+`[https://www.figma.com/design/f8BhLVD9cJLQbH2Mp4GXIq/MediTime-%E2%80%94-Capstone-UI?node-id=0-1&t=gpkDGWBmukjBEqKi-1]`
 ## Author
 
 Faiza — Pharmacist, Web Development Student (2026 Design Phase Cohort, eHealth Africa)
